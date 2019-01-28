@@ -61,6 +61,7 @@ gem 'rack-mini-profiler'
 group :development do
   gem 'annotate'
   gem 'pry'
+  gem "rails-erd"
   gem 'ruby-progressbar', require: false
   gem 'web-console'
 end
