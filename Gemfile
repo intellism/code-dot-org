@@ -109,6 +109,7 @@ group :development, :test do
   gem 'minitest-around'
   gem 'minitest-reporters', '~> 1.2.0.beta3'
   gem 'net-http-persistent'
+  gem 'railroady'
   gem 'rinku'
   gem 'rspec'
   gem 'selenium-webdriver', '3.8.0'

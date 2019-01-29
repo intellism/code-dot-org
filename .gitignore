@@ -68,3 +68,5 @@ npm-debug.log
 /rebuild-code-studio
 /shared/js/node_modules/
 /tools/scripts/brokenLinkChecker/node_modules/
+/dashboard/erd.pdf
+/dashboard/doc/

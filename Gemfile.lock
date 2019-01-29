@@ -667,6 +667,7 @@ GEM
       rack (>= 1.0)
     rack_csrf (2.5.0)
       rack (>= 1.1.0)
+    railroady (1.5.3)
     rails (5.0.7)
       actioncable (= 5.0.7)
       actionmailer (= 5.0.7)
@@ -1007,6 +1008,7 @@ DEPENDENCIES
   rack-mini-profiler
   rack-ssl-enforcer
   rack_csrf
+  railroady
   rails (~> 5.0.1)
   rails-controller-testing
   rails-erd
