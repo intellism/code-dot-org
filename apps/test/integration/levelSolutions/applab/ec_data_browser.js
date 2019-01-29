@@ -1,6 +1,6 @@
 import tickWrapper from '../../util/tickWrapper';
 import { TestResults } from '@cdo/apps/constants';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react/test-utils';
 
 const enterKeyEvent = {key: "Enter", keyCode: 13, which: 13};
 
@@ -452,7 +452,7 @@ module.exports = {
         onRecordEvent('mytable', function(record, eventType) {
           if (eventType === 'create') {
             console.log('created record ' + record.id);
-          } 
+          }
         });`,
 
       runBeforeClick: function (assert) {
