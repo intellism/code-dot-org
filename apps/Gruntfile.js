@@ -233,6 +233,12 @@ describe('entry tests', () => {
         },
         {
           expand: true,
+          cwd: './node_modules/blockly/',
+          src: ['**'],
+          dest: 'build/package/js/blockly',
+        },
+        {
+          expand: true,
           cwd: 'lib/droplet',
           src: ['droplet.min.css'],
           dest: 'build/package/css/droplet/'

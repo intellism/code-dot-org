@@ -1,4 +1,8 @@
 - content_for(:head) do
+  %script{src: asset_path('js/blockly/blockly_compressed.js')}
+  %script{src: asset_path('js/blockly/blocks_compressed.js')}
+  %script{src: asset_path('js/blockly/msg/js/en.js')}
+  %script{src: asset_path('js/blockly/javascript_compressed.js')}
   %script{src: asset_path('js/blockly.js')}
   %script{src: asset_path("js/#{js_locale}/blockly_locale.js")}
   %script{src: minifiable_asset_path('js/blocks/edit.js')}
