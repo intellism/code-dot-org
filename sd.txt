@@ -1,0 +1,73 @@
+@startuml
+title Middle School Teacher Registers For CSD Workshop
+
+' Configuration
+autonumber
+hide footbox
+
+' Participants
+actor teacher
+participant cdo as "code.org"
+participant dashboard as "dashboard app"
+
+note over cdo: (or a browser opening\ncode.org page)
+
+' Flow
+== Discovering ==
+
+teacher -> cdo: Enter code.org in browser
+activate teacher
+activate cdo
+cdo -> dashboard: get root /
+activate dashboard
+    rnote right: home#index
+cdo <-- dashboard: home/index
+deactivate dashboard
+teacher <-- cdo: CDO homepage
+
+teacher -> cdo: Select //Middle School//
+teacher <-- cdo: Middle school curriculum page
+
+teacher -> cdo: Select //Learn about professional learning//
+teacher <-- cdo: Middle-High page
+
+== Applying ==
+
+teacher -> cdo: Select //Apply Now// or //Get Started//
+teacher <-- cdo: Find Regional Information page
+
+teacher -> cdo: Enter zip code then click //Start Application//
+teacher <-- cdo: PD sign up page
+alt Doesn't have CDO account
+    teacher -> cdo: Select //Create an account//
+...
+else Has CDO account
+    teacher -> cdo: Select //Sign in//
+end
+teacher <-- cdo: Teacher application form
+teacher -> cdo: Fill out and submit form
+teacher <-- cdo: Submission confirmation page
+
+/'
+teacher -> cdo:
+teacher <-- cdo:
+'/
+deactivate teacher
+deactivate cdo
+
+create actor principal #gray
+activate dashboard
+dashboard -> principal: Request to approve this application
+alt Principal approves
+dashboard <- principal: Approve
+teacher <-- dashboard: Send approval email
+else Principal disapproves
+dashboard <- principal: Disapprove
+teacher <-- dashboard: Send rejection email
+end
+deactivate dashboard
+
+
+== Registering ==
+
+@enduml
