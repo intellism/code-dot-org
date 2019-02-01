@@ -6,67 +6,82 @@ autonumber
 hide footbox
 
 ' Participants
+box "UI Flow" #LightGreen
 actor teacher
-participant cdo as "code.org"
-participant dashboard as "dashboard app"
+participant browser as "browser"
+end box
 
-note over cdo: (or a browser opening\ncode.org page)
+participant peg as "pegasus app"
+participant dashboard as "dashboard app"
 
 ' Flow
 == Discovering ==
 
-teacher -> cdo: Enter code.org in browser
+teacher -> browser: Enter code.org in browser
 activate teacher
-activate cdo
-cdo -> dashboard: get root /
-activate dashboard
-    rnote right: home#index
-cdo <-- dashboard: home/index
-deactivate dashboard
-teacher <-- cdo: CDO homepage
+activate browser
+browser -> peg: get /
+activate peg
+browser <-- peg: /sites.v3/code.org/public/index.haml
+teacher <-- browser: Code.org homepage
 
-teacher -> cdo: Select //Middle School//
-teacher <-- cdo: Middle school curriculum page
+teacher -> browser: Select //Middle School//
+browser -> peg: get /educate/curriculum/middle-school
+peg --> browser: /sites.v3/code.org/public/educate/curriculum/middle-school.md
+teacher <-- browser: Middle school curriculum page
 
-teacher -> cdo: Select //Learn about professional learning//
-teacher <-- cdo: Middle-High page
+teacher -> browser: Select //Learn about professional learning//
+browser -> peg: get /educate/professional-learning/middle-high
+browser <-- peg: /sites.v3/code.org/public/educate/professional-learning/middle-high.md
+teacher <-- browser: PD for Middle-High school page
+
+teacher -> browser: Select //Apply Now// or //Get Started//
+browser -> peg: get /educate/professional-learning/program-information
+browser <-- peg: /sites.v3/code.org/public/educate/professional-learning/program-information.md
+deactivate peg
+teacher <-- browser: Find Regional Information page
+
+teacher -> browser: Enter a zip code
+teacher <-- browser: List of regional partners and workshops
 
 == Applying ==
 
-teacher -> cdo: Select //Apply Now// or //Get Started//
-teacher <-- cdo: Find Regional Information page
-
-teacher -> cdo: Enter zip code then click //Start Application//
-teacher <-- cdo: PD sign up page
-alt Doesn't have CDO account
-    teacher -> cdo: Select //Create an account//
+teacher -> browser: Select //Start Application//
+browser -> dashboard: get /pd/application/teacher
+    rnote right dashboard: teacher_application#new
+    'dashboard/app/controllers/pd/application/teacher_application_controller.rb
+activate dashboard
+browser <-- dashboard: /app/views/pd/application/teacher_application/logged_out.haml
+    'return options: logged_out || not_teacher || submitted || dashboard/app/views/pd/application/teacher_application/new.html.haml
+teacher <-- browser: Sign in/Sign up page
+alt Teacher doesn't have CDO account
+    teacher -> browser: Select //Create an account//
 ...
-else Has CDO account
-    teacher -> cdo: Select //Sign in//
+else Teacher already has CDO account
+    teacher -> browser: Select //Sign in//
 end
-teacher <-- cdo: Teacher application form
-teacher -> cdo: Fill out and submit form
-teacher <-- cdo: Submission confirmation page
+teacher <-- browser: Teacher application form
+teacher -> browser: Fill out and submit form
+teacher <-- browser: Submission confirmation page
+teacher <-- dashboard: Submission confirmation email
 
 /'
-teacher -> cdo:
-teacher <-- cdo:
+teacher -> browser:
+teacher <-- browser:
 '/
+
+deactivate browser
 deactivate teacher
-deactivate cdo
 
 create actor principal #gray
-activate dashboard
-dashboard -> principal: Request to approve this application
-alt Principal approves
-dashboard <- principal: Approve
+dashboard ->> principal: Request to approve this application
+alt Principal approves application
+dashboard <-- principal: Approve
 teacher <-- dashboard: Send approval email
-else Principal disapproves
-dashboard <- principal: Disapprove
+else Principal rejects application
+dashboard <-- principal: Reject
 teacher <-- dashboard: Send rejection email
 end
-deactivate dashboard
-
 
 == Registering ==
 
