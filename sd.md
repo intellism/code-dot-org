@@ -1,1 +1,3 @@
+To re-fresh the diagram, go [here](www.plantuml.com/plantuml/uml/LSqn4W8X30NGVa-X1rZIMr5uaKWom0mG9_oC7b_RBL_ryWOxOexZtbSP8He-RWruxmUHyoVLZXQlsEh55dGX5PjKJFGKmsbUhsXCpyxLUTAMX2-Eh4l-mmy0), refresh the page and click **Submit**.
+
 ![Teacher Workshop Sequence Diagram](http://www.plantuml.com/plantuml/png/LSqn4W8X30NGVa-X1rZIMr5uaKWom0mG9_oC7b_RBL_ryWOxOexZtbSP8He-RWruxmUHyoVLZXQlsEh55dGX5PjKJFGKmsbUhsXCpyxLUTAMX2-Eh4l-mmy0?)
