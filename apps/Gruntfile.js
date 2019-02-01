@@ -537,6 +537,10 @@ describe('entry tests', () => {
   };
 
   var otherEntries = {
+    // placeholder used by splitChunks config so that 'common-studio-common'
+    // chunk output can be used as an input to the 'essential' chunk.
+    'code-studio-common': './src/sites/studio/pages/code-studio-common.js',
+
     essential: './src/sites/studio/pages/essential.js',
     plc: './src/sites/studio/pages/plc.js',
 
@@ -647,7 +651,7 @@ describe('entry tests', () => {
               name: 'essential',
               minChunks: 2,
               chunks: (chunk) => {
-                const chunkNames = ['plc', 'peer_reviews']; // .concat(['code-studio-common'])
+                const chunkNames = ['plc', 'peer_reviews', 'code-studio-common'];
                 return chunkNames.includes(chunk.name);
               },
             }
