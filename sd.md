@@ -1,1 +1,1 @@
-![Teacher Workshop Sequence Diagram](http://www.plantuml.com/plantuml/png/LSqn4W8X30NGVa-X1rZIMr5uaKWom0mG9_oC7b_RBL_ryWOxOexZtbSP8He-RWruxmUHyoVLZXQlsEh55dGX5PjKJFGKmsbUhsXCpyxLUTAMX2-Eh4l-mmy0)
+![Teacher Workshop Sequence Diagram](http://www.plantuml.com/plantuml/png/LSqn4W8X30NGVa-X1rZIMr5uaKWom0mG9_oC7b_RBL_ryWOxOexZtbSP8He-RWruxmUHyoVLZXQlsEh55dGX5PjKJFGKmsbUhsXCpyxLUTAMX2-Eh4l-mmy0?)

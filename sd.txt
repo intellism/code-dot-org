@@ -11,40 +11,44 @@ actor teacher
 participant browser as "browser"
 end box
 
-participant peg as "pegasus app"
+participant pea as "pegasus app"
 participant dashboard as "dashboard app"
+actor principal#white
+actor partner as "regional partner"#white
 
 ' Flow
-== Discovering ==
+== Discover local workshops ==
 
-teacher -> browser: Enter code.org in browser
+teacher -> browser: Go to code.org
 activate teacher
 activate browser
-browser -> peg: get /
-activate peg
-browser <-- peg: /sites.v3/code.org/public/index.haml
+browser -> pea: get /
+activate pea
+browser <-- pea: /sites.v3/code.org/public/index.haml
 teacher <-- browser: Code.org homepage
 
 teacher -> browser: Select //Middle School//
-browser -> peg: get /educate/curriculum/middle-school
-peg --> browser: /sites.v3/code.org/public/educate/curriculum/middle-school.md
+browser -> pea: get /educate/curriculum/middle-school
+pea --> browser: /sites.v3/code.org/public/educate/curriculum/middle-school.md
 teacher <-- browser: Middle school curriculum page
 
 teacher -> browser: Select //Learn about professional learning//
-browser -> peg: get /educate/professional-learning/middle-high
-browser <-- peg: /sites.v3/code.org/public/educate/professional-learning/middle-high.md
+browser -> pea: get /educate/professional-learning/middle-high
+browser <-- pea: /sites.v3/code.org/public/educate/professional-learning/middle-high.md
 teacher <-- browser: PD for Middle-High school page
 
 teacher -> browser: Select //Apply Now// or //Get Started//
-browser -> peg: get /educate/professional-learning/program-information
-browser <-- peg: /sites.v3/code.org/public/educate/professional-learning/program-information.md
-deactivate peg
+browser -> pea: get /educate/professional-learning/program-information
+browser <-- pea: /sites.v3/code.org/public/educate/professional-learning/program-information.md
 teacher <-- browser: Find Regional Information page
 
 teacher -> browser: Enter a zip code
+browser -> pea: ?
+browser <-- pea: ?
+deactivate pea
 teacher <-- browser: List of regional partners and workshops
 
-== Applying ==
+== Apply to Regional Partner's PD program ==
 
 teacher -> browser: Select //Start Application//
 browser -> dashboard: get /pd/application/teacher
@@ -55,8 +59,7 @@ browser <-- dashboard: /app/views/pd/application/teacher_application/logged_out.
     'return options: logged_out || not_teacher || submitted || dashboard/app/views/pd/application/teacher_application/new.html.haml
 teacher <-- browser: Sign in/Sign up page
 alt Teacher doesn't have CDO account
-    teacher -> browser: Select //Create an account//
-...
+    teacher -> browser: Select //Create an account// (and sign in)
 else Teacher already has CDO account
     teacher -> browser: Select //Sign in//
 end
@@ -64,25 +67,44 @@ teacher <-- browser: Teacher application form
 teacher -> browser: Fill out and submit form
 teacher <-- browser: Submission confirmation page
 teacher <-- dashboard: Submission confirmation email
-
-/'
-teacher -> browser:
-teacher <-- browser:
-'/
-
+dashboard ->> principal: Request to approve this application
 deactivate browser
 deactivate teacher
+deactivate dashboard
+...
 
-create actor principal #gray
-dashboard ->> principal: Request to approve this application
 alt Principal approves application
 dashboard <-- principal: Approve
-teacher <-- dashboard: Send approval email
+activate dashboard
+teacher <-- dashboard: Approval email
 else Principal rejects application
 dashboard <-- principal: Reject
-teacher <-- dashboard: Send rejection email
+teacher <-- dashboard: Rejection email
 end
 
-== Registering ==
+deactivate dashboard
+
+== Register/Enroll in a workshop ==
+
+...
+dashboard <- partner: Request to review applications
+activate dashboard
+dashboard --> partner: Application cohort view
+deactivate dashboard
+alt Partner rejects application
+    teacher <-- partner: Rejection email
+else Partner accepts application
+    teacher <-- partner: Acceptance email
+    teacher <-- partner: Workshop registration email
+    teacher -> browser: Go to workshop registration link
+    activate browser
+    teacher <-- browser: Registration form
+    teacher -> browser: Submit form
+    teacher <-- browser: Confirmation page
+    deactivate browser
+
+    teacher <-- dashboard: Reminder emails
+    teacher <-- dashboard: Pre-workshop survey
+end
 
 @enduml
