@@ -1,0 +1,53 @@
+@startuml
+title Middle School Teacher Registers For CSD Workshop\n(High Level)
+
+' Configuration
+autonumber
+hide footbox
+
+' Participants
+actor teacher
+participant cdo as "Code.org"
+actor principal#white
+actor partner as "regional partner"#white
+
+' Flow
+teacher -> cdo: Look up PD programs
+activate teacher
+activate cdo
+teacher <-- cdo: Local partners and their programs
+teacher -> cdo: Submit program application
+
+cdo ->> principal: Request approval
+activate principal
+alt Principal approves application
+    cdo <-- principal: Approve
+    teacher <-- cdo: Approval email
+else Principal rejects application
+    cdo <-- principal: Reject
+deactivate principal
+    teacher <-- cdo: Rejection email
+deactivate cdo
+deactivate teacher
+end
+
+partner -> cdo: Review applications
+activate partner
+activate cdo
+partner <-- cdo: Application cohort list
+deactivate cdo
+
+alt Partner accepts application
+    teacher <-- partner: Workshop registration email
+activate teacher
+    teacher -> cdo: Submit workshop registration
+activate cdo
+    teacher <-- cdo: Reminder emails and pre-workshop survey
+deactivate cdo
+else Partner rejects application
+    teacher <-- partner: Rejection email
+deactivate partner
+deactivate teacher
+end
+
+@enduml

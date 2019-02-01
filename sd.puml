@@ -1,0 +1,125 @@
+@startuml
+title Middle School Teacher Registers For CSD Workshop\n(Detailed Level)\n<i>Work in progress...</i>
+
+' Configuration
+autonumber
+'hide footbox
+
+' Participants
+box "UI Flow" #LightGreen
+actor teacher
+participant browser as "browser"
+end box
+
+participant pea as "pegasus app"
+participant dashboard as "dashboard app"
+actor principal#white
+actor partner as "regional partner"#white
+
+' Flow
+== Discover PD programs ==
+
+teacher -> browser: Go to code.org
+activate teacher
+activate browser
+browser -> pea: get /
+activate pea
+pea --> browser: /sites.v3/code.org/public/index.haml
+browser --> teacher: Code.org homepage
+
+teacher -> browser: Select //Middle School//
+browser -> pea: get /educate/curriculum/middle-school
+pea --> browser: /sites.v3/code.org/public/educate/curriculum/middle-school.md
+browser --> teacher: Middle school curriculum page
+
+teacher -> browser: Select //Learn about professional learning//
+browser -> pea: get /educate/professional-learning/middle-high
+pea --> browser: /sites.v3/code.org/public/educate/professional-learning/middle-high.md
+browser --> teacher: PD for Middle-High school page
+
+teacher -> browser: Select //Apply Now// or //Get Started//
+browser -> pea: get /educate/professional-learning/program-information
+pea --> browser: /sites.v3/code.org/public/educate/professional-earning/program-information.md
+deactivate pea
+browser --> teacher: Find Regional Information page
+
+teacher -> browser: Enter a zip code
+browser -> dashboard: get /dashboardapi/v1/regional_partners/find
+    rnote right dashboard: api/v1/regional_partners#find
+    ' /app/controllers/api/v1/regional_partners_controller.rb
+activate dashboard
+dashboard --> browser: partner json
+    ' /app/serializers/api/v1/pd/regional_partner_serializer.rb
+browser --> teacher: List of regional partners and workshops
+
+== Apply to a Regional Partner's PD program ==
+
+teacher -> browser: Select //Start Application//
+browser -> dashboard: get /pd/application/teacher
+    rnote right dashboard: teacher_application#new
+    '/app/controllers/pd/application/teacher_application_controller.rb
+dashboard --> browser: /app/views/pd/application/teacher_application/logged_out.haml
+    'return options: logged_out || not_teacher || submitted || /app/views/pd/application/teacher_application/new.html.haml
+browser --> teacher: Sign in/Sign up page
+alt Teacher doesn't have CDO account
+    teacher -> browser: Select //Create an account// (and sign in)
+else Teacher already has CDO account
+    teacher -> browser: Select //Sign in//
+end
+dashboard --> browser: /app/views/pd/application/teacher_application/new.html.haml\napps/src/sites/studio/pages/pd/application/teacher_application/new.js
+    rnote right dashboard: teacher_application#new
+browser --> teacher: Teacher application form
+teacher -> browser: Fill out and submit form
+browser -> dashboard: post /api/v1/pd/application/teacher
+    rnote right dashboard: teacher_applications#create\n(forms_controller#create)
+    '/app/controllers/api/v1/pd/application/teacher_applications_controller.rb
+    '/app/controllers/api/v1/pd/forms_controller.rb
+dashboard --> browser: /app/views/pd/application/teacher_application/submitted.html.haml
+    rnote right dashboard: teacher_application#new
+browser --> teacher: Submission confirmation page
+dashboard --> teacher: Email: Submission confirmation\n teacher1920_application_mailer/confirmation.html.haml
+    rnote right dashboard: teacher1920_application#on_successful_create\n(application_base#queue_email)
+    '/app/models/pd/application/email.rb
+dashboard ->> principal: Email: Request for approval\nteacher1920_application_mailer/principal_approval.html.haml
+    'teacher1920_application#on_successful_create
+activate principal
+deactivate browser
+deactivate teacher
+
+alt Principal approves application
+    principal --> dashboard: Approve
+else Principal rejects application
+    principal --> dashboard: Reject
+    dashboard --> teacher: Email: Decline\nteacher1920_application_mailer/declined.html.haml
+end
+dashboard --> principal: Email: Approval completed\nteacher1920_application_mailer/principal_approval_completed.html.haml
+deactivate principal
+deactivate dashboard
+
+== Register/Enroll in a workshop ==
+
+...
+dashboard <- partner: Request to review applications
+activate partner
+activate dashboard
+dashboard --> partner: Application cohort view
+deactivate dashboard
+alt Partner accepts application
+    partner --> teacher: Email: Workshop registration
+    activate teacher
+    teacher -> browser: Go to workshop registration link
+    activate browser
+    browser --> teacher: Registration form
+    teacher -> browser: Submit form
+    browser --> teacher: Confirmation page
+    deactivate browser
+
+    dashboard --> teacher: Reminder emails
+    dashboard --> teacher: Pre-workshop survey
+else Partner rejects application
+    partner --> teacher: Email: Decline\nteacher1920_application_mailer/declined.html.haml
+end
+deactivate teacher
+deactivate partner
+
+@enduml
