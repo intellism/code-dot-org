@@ -440,6 +440,9 @@ describe('entry tests', () => {
   var codeStudioEntries = {
     'blockly':                             './src/sites/studio/pages/blockly.js',
     'code-studio':                         './src/sites/studio/pages/code-studio.js',
+    // placeholder used by splitChunks config so that 'common' chunk output
+    // can be used as an input to code-studio-common chunk.
+    'common':                              './src/sites/studio/pages/common.js',
     'levels/contract_match':               './src/sites/studio/pages/levels/contract_match.jsx',
     'levels/_curriculum_reference':        './src/sites/studio/pages/levels/_curriculum_reference.js',
     'levels/_dialog':                      './src/sites/studio/pages/levels/_dialog.js',
@@ -628,13 +631,14 @@ describe('entry tests', () => {
               minChunks: 2,
               chunks: (chunk) => {
                 return _.keys(appsEntries).includes(chunk.name);
-              }
+              },
+              priority: 20,
             },
             'code-studio-common': {
               name: 'code-studio-common',
               minChunks: 2,
               chunks: (chunk) => {
-                const chunkNames = _.keys(codeStudioEntries); // .concat(_.keys(appsEntries))
+                const chunkNames = _.keys(codeStudioEntries);
                 return chunkNames.includes(chunk.name);
               },
               priority: 10

@@ -49,6 +49,7 @@ const SILENCED = [
   'brambleHost',
   'calc',
   'code-studio',
+  'common',
   'craft',
   'districtDropdown',
   'embedBlocks',
