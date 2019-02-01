@@ -256,7 +256,7 @@ function create(options) {
           },
           // Don't generate source maps for our minified code, as these are expensive
           // and we haven't been using them.
-          sourceMap: false
+          sourceMap: true
         }),
         new UnminifiedWebpackPlugin(),
       ]
