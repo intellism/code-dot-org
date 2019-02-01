@@ -18,6 +18,7 @@
     "clean": "grunt clean",
     "build": "DEV=1 node --max_old_space_size=4096 ./node_modules/.bin/grunt build && grunt logBuildTimes",
     "build:analyze": "ANALYZE_BUNDLE=1 DEV=1 node --max_old_space_size=4096 ./node_modules/.bin/grunt build && grunt logBuildTimes",
+    "build:dist:analyze": "ANALYZE_BUNDLE=1 NODE_ENV=production node --max_old_space_size=4096 ./node_modules/.bin/grunt build && grunt logBuildTimes",
     "build:dist": "NODE_ENV=production node --max_old_space_size=4096 ./node_modules/.bin/grunt clean build && grunt logBuildTimes",
     "postinstall": "npm rebuild node-sass",
     "start": "DEV=1 node --max_old_space_size=4096 ./node_modules/.bin/grunt dev; grunt logBuildTimes",
