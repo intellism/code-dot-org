@@ -639,23 +639,23 @@ describe('entry tests', () => {
               },
               priority: 20,
             },
-            'code-studio-common': {
-              name: 'code-studio-common',
-              minChunks: 2,
-              chunks: (chunk) => {
-                const chunkNames = _.keys(codeStudioEntries);
-                return chunkNames.includes(chunk.name);
-              },
-              priority: 10
-            },
-            'essential': {
-              name: 'essential',
-              minChunks: 2,
-              chunks: (chunk) => {
-                const chunkNames = ['plc', 'peer_reviews', 'code-studio-common'];
-                return chunkNames.includes(chunk.name);
-              },
-            }
+            // 'code-studio-common': {
+            //   name: 'code-studio-common',
+            //   minChunks: 2,
+            //   chunks: (chunk) => {
+            //     const chunkNames = _.keys(codeStudioEntries);
+            //     return chunkNames.includes(chunk.name);
+            //   },
+            //   priority: 10
+            // },
+            // 'essential': {
+            //   name: 'essential',
+            //   minChunks: 2,
+            //   chunks: (chunk) => {
+            //     const chunkNames = ['plc', 'peer_reviews', 'code-studio-common'];
+            //     return chunkNames.includes(chunk.name);
+            //   },
+            // }
           }
         }
       },
