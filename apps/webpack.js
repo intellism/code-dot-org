@@ -227,7 +227,7 @@ function create(options) {
     output: {
       path: outputDir,
       publicPath: '/assets/js/',
-      filename: "[name]." + (minify ? "min." : "") + "js",
+      filename: "[name]." + (minify ? "" : "") + "js",
     },
     devtool: !process.env.CI && options.minify ?  'source-map' : devtool,
     entry: entries,
