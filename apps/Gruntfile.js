@@ -58,13 +58,13 @@ describe('entry tests', () => {
   /** @const {string[]} */
   var ALL_APPS = [
     'applab',
-    'bounce',
-    'calc',
+    // 'bounce',
+    // 'calc',
     // 'craft',
     // 'dance',
     // 'eval',
     // 'flappy',
-    'gamelab',
+    // 'gamelab',
     // 'jigsaw',
     // 'maze',
     // 'netsim',
@@ -442,7 +442,7 @@ describe('entry tests', () => {
     'code-studio':                         './src/sites/studio/pages/code-studio.js',
     // placeholder used by splitChunks config so that 'common' chunk output
     // can be used as an input to code-studio-common chunk.
-    'common':                              './src/sites/studio/pages/common.js',
+    // 'common':                              './src/sites/studio/pages/common.js',
     // 'levels/contract_match':               './src/sites/studio/pages/levels/contract_match.jsx',
     // 'levels/_curriculum_reference':        './src/sites/studio/pages/levels/_curriculum_reference.js',
     // 'levels/_dialog':                      './src/sites/studio/pages/levels/_dialog.js',
@@ -539,10 +539,10 @@ describe('entry tests', () => {
   var otherEntries = {
     // placeholder used by splitChunks config so that 'common-studio-common'
     // chunk output can be used as an input to the 'essential' chunk.
-    'code-studio-common': './src/sites/studio/pages/code-studio-common.js',
+    // 'code-studio-common': './src/sites/studio/pages/code-studio-common.js',
 
-    essential: './src/sites/studio/pages/essential.js',
-    plc: './src/sites/studio/pages/plc.js',
+    // essential: './src/sites/studio/pages/essential.js',
+    // plc: './src/sites/studio/pages/plc.js',
 
     // Build embedVideo.js in its own step (skipping factor-bundle) so that
     // we don't have to include the large code-studio-common file in the
