@@ -686,13 +686,13 @@ function setupReduxSubscribers(store) {
   if (store.getState().pageConstants.hasDataMode) {
     // Initialize redux's list of tables from firebase, and keep it up to date as
     // new tables are added and removed.
-    const tablesRef = getDatabase(Applab.channelId).child('counters/tables');
-    tablesRef.on('child_added', snapshot => {
-      store.dispatch(addTableName(typeof snapshot.key === 'function' ? snapshot.key() : snapshot.key));
-    });
-    tablesRef.on('child_removed', snapshot => {
-      store.dispatch(deleteTableName(typeof snapshot.key === 'function' ? snapshot.key() : snapshot.key));
-    });
+    // const tablesRef = getDatabase(Applab.channelId).child('counters/tables');
+    // tablesRef.on('child_added', snapshot => {
+    //   store.dispatch(addTableName(typeof snapshot.key === 'function' ? snapshot.key() : snapshot.key));
+    // });
+    // tablesRef.on('child_removed', snapshot => {
+    //   store.dispatch(deleteTableName(typeof snapshot.key === 'function' ? snapshot.key() : snapshot.key));
+    // });
   }
 }
 
