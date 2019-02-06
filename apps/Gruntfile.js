@@ -57,19 +57,19 @@ describe('entry tests', () => {
 
   /** @const {string[]} */
   var ALL_APPS = [
-    'applab',
-    'bounce',
-    'calc',
+    // 'applab',
+    // 'bounce',
+    // 'calc',
     // 'craft',
     // 'dance',
     // 'eval',
     // 'flappy',
-    'gamelab',
+    // 'gamelab',
     // 'jigsaw',
     // 'maze',
     // 'netsim',
-    // 'studio',
-    // 'turtle',
+    'studio',
+    'turtle',
     // 'scratch',
     // 'weblab'
   ];
