@@ -579,6 +579,7 @@ describe('entry tests', () => {
   function createConfig(options) {
     var minify = options.minify;
     var watch = options.watch;
+    var debugMinify = options.debugMinify;
 
     return webpackConfig.create({
       output: path.resolve(__dirname, OUTPUT_DIR),
@@ -647,6 +648,7 @@ describe('entry tests', () => {
       ],
       minify: minify,
       watch: watch,
+      debugMinify: debugMinify,
       watchNotify: grunt.option('watch-notify'),
       piskelDevMode: PISKEL_DEVELOPMENT_MODE
     });
@@ -661,6 +663,12 @@ describe('entry tests', () => {
     uglify: createConfig({
       minify: true,
       watch: false
+    }),
+
+    uglifyDebug: createConfig({
+      minify: true,
+      watch: false,
+      debugMinify: true
     }),
 
     watch: createConfig({
@@ -847,9 +855,16 @@ describe('entry tests', () => {
     'compile-firebase-rules'
   ]);
 
+  function getBuildTarget() {
+    if (envConstants.DEV) {
+      return 'webpack:build';
+    }
+    return envConstants.DEBUG_MINIFIED ? 'webpack:uglifyDebug' : 'webpack:uglify';
+  }
+
   grunt.registerTask('build', [
     'prebuild',
-    envConstants.DEV ? 'webpack:build' : 'webpack:uglify',
+    getBuildTarget(),
     'notify:js-build',
     // Skip minification in development environment.
     envConstants.DEV ? 'noop' : 'uglify:lib',
