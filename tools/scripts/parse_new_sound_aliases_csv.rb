@@ -8,8 +8,6 @@ class NewSoundAliasesMetadataBuilder
   end
 
   def parse_filenames(csv)
-    # csv_text = File.read(csv)
-    # table = CSV.parse(File.read(csv), headers: true)
     filename = csv.by_col[1]
     # changed file extension to .mp3 to run .generateSoundMetaData.rb
     return filename.each do |name|
