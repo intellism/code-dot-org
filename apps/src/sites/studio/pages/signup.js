@@ -86,8 +86,6 @@ window.SignupManager = function(options) {
     var url;
     if (self.options.returnToUrl !== '') {
       url = self.options.returnToUrl;
-    } else if (isTeacherSelected()) {
-      url = self.options.teacherDashboardUrl;
     } else {
       url = '/';
     }
